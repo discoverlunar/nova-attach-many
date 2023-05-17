@@ -100,7 +100,7 @@ export default {
             let baseUrl = '/nova-vendor/nova-attach-many/';
 
             if(this.resourceId) {
-                Nova.request(baseUrl + this.resourceName + '/' + this.resourceId + '/attachable/' + this.field.attribute)
+                Nova.request(baseUrl + this.resourceName + '/' + this.resourceId + '/attachable/' + this.currentField.attribute)
                     .then((data) => {
                         if(keepSelected) {
                             this.selected = _.intersection(this.selected, _.map(data.data.available, 'value'));
@@ -112,7 +112,7 @@ export default {
                     });
             }
             else {
-                Nova.request(baseUrl + this.resourceName + '/attachable/' + this.field.attribute)
+                Nova.request(baseUrl + this.resourceName + '/attachable/' + this.currentField.attribute)
                     .then((data) => {
                         this.available = data.data.available || [];
                         this.loading = false;
@@ -121,7 +121,7 @@ export default {
         },
 
         fill(formData) {
-            formData.append(this.field.attribute, this.value || [])
+            formData.append(this.currentField.attribute, this.value || [])
         },
 
         toggle(event, id){
@@ -229,10 +229,10 @@ export default {
             });
         },
         hasErrors: function() {
-            return this.errors.errors.hasOwnProperty(this.field.attribute);
+            return this.errors.errors.hasOwnProperty(this.currentField.attribute);
         },
         firstError: function() {
-            return this.errors.errors[this.field.attribute][0]
+            return this.errors.errors[this.currentField.attribute][0]
         }
     },
     watch: {
